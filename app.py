@@ -49,12 +49,25 @@ def upload(label, cols, key):
     except Exception as e:
         st.error(f'Cannot read CSV: {e}');return None
 
+def showcase_data():
+    import numpy as np
+    rng = np.random.default_rng(2026)
+    dates = pd.date_range("2020-11-01", periods=60)
+    daily = pd.DataFrame({"day": dates, "sessions": 650 + np.arange(60) * 7 + rng.integers(-100, 100, 60)})
+    purchases = pd.DataFrame({"day": dates, "purchases": rng.integers(10, 48, 60), "purchase_revenue": rng.integers(500, 3000, 60)})
+    channels = pd.DataFrame({"first_user_source": ["google", "(direct)", "youtube", "newsletter", "referral"], "first_user_medium": ["organic", "(none)", "social", "email", "referral"], "sessions": [18000, 12500, 7200, 4300, 2600], "purchases": [310, 190, 85, 105, 30], "session_purchase_rate": [.017, .015, .012, .024, .011]})
+    funnel = pd.DataFrame([{"sessions": 44600, "sessions_view_item": 26000, "sessions_add_to_cart": 9300, "sessions_begin_checkout": 4100, "sessions_purchase": 720}])
+    return daily, purchases, channels, funnel
+
 with st.sidebar:
     st.markdown("## ✦ NEXUS")
     st.caption("COMMERCE INTELLIGENCE / 2026")
     st.divider()
     st.markdown("**WORKSPACE**")
     page=st.radio("Navigation",["Overview","Acquisition","Conversion funnel","Tracking & privacy"],label_visibility="collapsed")
+    st.divider()
+    st.markdown("**DISPLAY MODE**")
+    demo_mode=st.toggle("Showcase data (synthetic)",value=False)
     st.divider()
     st.markdown("**DATA CONNECTORS**")
     daily=upload("Sessions CSV",["day","sessions"],"daily")
@@ -64,6 +77,10 @@ with st.sidebar:
     st.caption("Export the four SQL query results from BigQuery, then upload them here.")
     st.divider()
     st.caption("GA4 · BIGQUERY · LOOKER STUDIO")
+
+if demo_mode:
+    daily, purchases, channels, funnel = showcase_data()
+    st.warning("DEMO MODE — All figures are synthetic illustrations, NOT actual GA4 results. Turn off demo mode to use BigQuery CSV exports.")
 
 st.markdown("""<div class="hero"><div class="eyebrow">✦ MARKETING ANALYTICS PLATFORM</div>
 <div class="hero-title">Your commerce.<br>In sharper focus.</div>
