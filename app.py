@@ -69,6 +69,21 @@ with st.sidebar:
     st.markdown("**DISPLAY MODE**")
     demo_mode=st.toggle("Showcase data (synthetic)",value=False)
     st.divider()
+    st.markdown("**DATA SOURCE**")
+    data_source=st.radio("Choose source",["CSV uploads","BigQuery (live)"],label_visibility="collapsed")
+    if data_source=="BigQuery (live)":
+        project_id=st.text_input("Google Cloud project ID",placeholder="your-project-id")
+        if st.button("Load real GA4 data",type="primary"):
+            if not project_id.strip():
+                st.error("Enter a project ID.")
+            else:
+                try:
+                    from data_loader import fetch_all
+                    with st.spinner("Executing four BigQuery queries…"):
+                        st.session_state["bq_data"]=fetch_all(project_id.strip())
+                    st.success("BigQuery results loaded.")
+                except Exception as exc:
+                    st.error(f"BigQuery connection failed: {exc}")
     st.markdown("**DATA CONNECTORS**")
     daily=upload("Sessions CSV",["day","sessions"],"daily")
     purchases=upload("Purchases CSV",["day","purchases","purchase_revenue"],"purchases")
@@ -78,6 +93,9 @@ with st.sidebar:
     st.divider()
     st.caption("GA4 · BIGQUERY · LOOKER STUDIO")
 
+if not demo_mode and data_source=="BigQuery (live)" and "bq_data" in st.session_state:
+    _d=st.session_state["bq_data"]
+    daily, purchases, channels, funnel = (_d["daily"].copy(),_d["purchases"].copy(),_d["channels"].copy(),_d["funnel"].copy())
 if demo_mode:
     daily, purchases, channels, funnel = showcase_data()
     st.warning("DEMO MODE — All figures are synthetic illustrations, NOT actual GA4 results. Turn off demo mode to use BigQuery CSV exports.")
