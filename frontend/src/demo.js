@@ -1,0 +1,5 @@
+// Explicitly synthetic data for visual demonstration, never real GA4 metrics.
+const seeded=(n)=>{const x=Math.sin(n*78.233)*43758.5453;return x-Math.floor(x)};
+export const demoDaily=Array.from({length:60},(_,i)=>({day:new Date(Date.UTC(2020,10,1+i)).toISOString().slice(0,10),sessions:Math.round(580+i*8+seeded(i)*260),purchases:Math.round(12+seeded(i+100)*36),purchase_revenue:Math.round(650+seeded(i+200)*2200)}));
+export const demoChannels=[{first_user_source:'google',first_user_medium:'organic',sessions:18000,purchases:310,session_purchase_rate:.017},{first_user_source:'(direct)',first_user_medium:'(none)',sessions:12500,purchases:190,session_purchase_rate:.015},{first_user_source:'youtube',first_user_medium:'social',sessions:7200,purchases:85,session_purchase_rate:.012},{first_user_source:'newsletter',first_user_medium:'email',sessions:4300,purchases:105,session_purchase_rate:.024},{first_user_source:'referral',first_user_medium:'referral',sessions:2600,purchases:30,session_purchase_rate:.011}];
+export const demoFunnel=[{sessions:44600,sessions_view_item:26000,sessions_add_to_cart:9300,sessions_begin_checkout:4100,sessions_purchase:720}];
