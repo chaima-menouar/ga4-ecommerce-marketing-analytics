@@ -30,3 +30,30 @@
 - `results/monthly_traffic.csv`: monthly `session_start` counts.
 
 All figures are descriptive and limited to the anonymized GA4 public sample and the stated date range.
+
+## Complement for the dashboard (Member 3): traffic rhythm
+
+- **Peak:** 8 December 2020 is the busiest day (7,526 sessions), followed by 9 December (6,211) and 10 December (5,759). A second high point is 6 January 2021 (5,952).
+- **Black Friday:** 27 November 2020 recorded 3,928 sessions, close to the November daily average (about 3,553). No spike is visible on that day in these data.
+- **Weekly pattern:** average daily sessions are highest on Tuesday (about 4,600) and Wednesday (about 4,500) and lowest on Saturday (about 3,060) and Sunday (about 2,860).
+- **Holidays:** 24 and 25 December and 1 January are among the lowest days (2,774; 2,624; 2,289).
+- No cause is attributed to the December peak: campaign or sales data would be needed.
+
+## Complement for the dashboard (Member 3): from acquisition to conversion
+
+Source: `results/03_Channel_Conversion_Data.csv`. Channels are grouped by `traffic_source.medium` (first-user acquisition). The base is sessions with a product view, and a purchase means a complete ordered funnel (product view, add to cart, begin checkout, purchase).
+
+| Medium | Product-view sessions | Purchase sessions | Purchase rate |
+|---|---|---|---|
+| `referral` | 14,090 | 609 | 4.32% |
+| `(none)` | 17,678 | 643 | 3.64% |
+| `organic` | 25,740 | 798 | 3.10% |
+| `cpc` | 3,168 | 91 | 2.87% |
+| `<Other>` | 10,589 | 299 | 2.82% |
+| `(data deleted)` | 5,755 | 394 | 6.85% |
+| All channels | 77,020 | 2,834 | 3.68% |
+
+- Organic is the largest source of product-view sessions (33.4%) but converts below the 3.68% average.
+- `cpc` brings the smallest volume (4.1% of product-view sessions, 3.2% of purchase sessions) with a below-average rate. Without cost data, its return cannot be judged.
+- `(data deleted)` shows the highest rate (6.85%) but is masked data and must not drive decisions.
+- `referral` includes `shop.googlemerchandisestore.com` (26,065 users in `source_medium.csv`), which looks like the store's own domain. Part of the referral performance may therefore come from internal traffic.
